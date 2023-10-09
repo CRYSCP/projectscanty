@@ -59,4 +59,13 @@ contract Scanty is ERC20, Ownable, KeeperCompatibleInterface, VRFConsumerBase {
         uint256 newSupply = totalSupply() + (totalSupply() * randomResult) / 10 ** 18;
         _mint(owner(), newSupply - totalSupply());
     }
+  }
+   function grantRole(bytes32 role, address account) public override onlyOwner {
+        require(role != DEFAULT_ADMIN_ROLE, "Cannot grant DEFAULT_ADMIN_ROLE");
+        _grantRole(role, account);
+    }
+
+    function grantAutomatorRole(address scantyrngAddress) public onlyOwner {
+        grantRole(ROLE_AUTOMATOR, scantyrngAddress);
+    }
 }
